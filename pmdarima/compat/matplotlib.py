@@ -8,7 +8,8 @@ import sys
 import os
 
 __all__ = [
-    'get_compatible_pyplot'
+    'get_compatible_pyplot',
+    'get_density_kwarg'
 ]
 
 
@@ -72,8 +73,8 @@ def get_density_kwarg(value=True):
     """
     import matplotlib
 
-    # matplotlib < 3.2.0 uses `normed` instead of `density`
-    density_kwarg = 'normed' if matplotlib.__version__ < '3.2.0' else 'density'
+    # matplotlib >= 2.1.0 uses `density` instead of `normed`
+    density_kwarg = 'density' if matplotlib.__version__ >= '3.2.0' else 'normed'
 
     # If the user supplies an argument, we will use it, but we default to True
     return {density_kwarg: value}
