@@ -49,3 +49,31 @@ def get_compatible_pyplot(backend=None, debug=True):
 
     from matplotlib import pyplot as plt
     return plt
+
+
+def get_density_kwarg(value=True):
+    """Find the appropriate `density` kwarg for our given matplotlib version.
+
+    This will determine if we should use `normed` or `density`. Additionally,
+    since this is a kwarg, the user can supply a value (True or False) that
+    they would like in the output dictionary.
+
+    Parameters
+    ----------
+    value : bool, optional (default=True)
+        The boolean value of density/normed
+
+    Returns
+    -------
+    density_kwarg : dict
+        A dictionary containing the appropriate density kwarg for the
+        installed  matplotlib version, mapped to the provided or default
+        value
+    """
+    import matplotlib
+
+    # matplotlib < 3.2.0 uses `normed` instead of `density`
+    density_kwarg = 'normed' if matplotlib.__version__ < '3.2.0' else 'density'
+
+    # If the user supplies an argument, we will use it, but we default to True
+    return {density_kwarg: value}

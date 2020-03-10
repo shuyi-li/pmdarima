@@ -20,7 +20,7 @@ import os
 from ..base import BaseARIMA
 from ..compat.numpy import DTYPE  # DTYPE for arrays
 from ..compat.sklearn import get_compatible_check_is_fitted, safe_indexing
-from ..compat import statsmodels as sm_compat
+from ..compat import statsmodels as sm_compat, matplotlib as mpl_compat
 from ..utils import get_callable, if_has_delegate, is_iterable, check_endog, \
     check_exog
 from ..utils.visualization import _get_plt
@@ -1197,7 +1197,7 @@ class ARIMA(BaseARIMA):
         # temporarily disable Deprecation warning, normed -> density
         # hist needs to use `density` in future when minimum matplotlib has it
         with warnings.catch_warnings(record=True):
-            ax.hist(resid_nonmissing, normed=True, label='Hist')
+            ax.hist(resid_nonmissing, label='Hist', **mpl_compat.get_density_kwarg())
 
         kde = gaussian_kde(resid_nonmissing)
         xlim = (-1.96 * 2, 1.96 * 2)
