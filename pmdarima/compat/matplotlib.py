@@ -74,7 +74,7 @@ def get_density_kwarg(value=True):
     import matplotlib
 
     # matplotlib >= 2.1.0 uses `density` instead of `normed`
-    density_kwarg = 'density' if matplotlib.__version__ >= '3.2.0' else 'normed'
+    density_kwarg = 'density' if matplotlib.__version__ >= '2.1.0' else 'normed'
 
     # If the user supplies an argument, we will use it, but we default to True
     return {density_kwarg: value}
