@@ -143,8 +143,9 @@ def decompose(x, type_, m, filter_=None):
     # We buffer the trend and seasonal components so that they are the same
     # length as the other outputs. This counters the effects of losing data
     # by the convolution/sma
-    buffer = [np.nan] * half_m
-    trend = list(buffer + trend.tolist() + buffer)
+    buffer_left = [np.nan] * half_m
+    buffer_right = [np.nan] * (len(x) - len(buffer_left) - len(trend))
+    trend = list(buffer_left + trend.tolist() + buffer_right)
 
     # Remove the trend and seasonal effects from the original signal to get
     # the random/noisy effects within the original signal.
